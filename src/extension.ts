@@ -9,6 +9,18 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.One,
         {}
       );
+
+      async function getClipboardText(): Promise<string> {
+        try {
+          const text = await navigator.clipboard.readText();
+          console.log('Operation successful');
+          return text;
+        } catch (err) {
+          console.log('Error');
+          return '';
+        }
+      }
+
       // HTML content
       panel.webview.html = getWebViewContent();
     })
