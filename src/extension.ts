@@ -1,26 +1,96 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "copilot-latex-translator" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('copilot-latex-translator.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Copilot&#39;s LaTex Translator!');
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(
+    vscode.commands.registerCommand('clt.start', () => {
+      // Webview panel
+      const panel = vscode.window.createWebviewPanel(
+        'clt',
+        "Copilot's LaTeX translator",
+        vscode.ViewColumn.One,
+        {}
+      );
+      // HTML content
+      panel.webview.html = getWebViewContent();
+    })
+  );
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+function getWebViewContent() {
+  return /*html*/ `
+	<!DOCTYPE html>
+	<html lang="en">
+
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Document</title>
+	    <style>
+	        body {
+	            background-color: var(--vscode-editor-background);
+	            color: var(--vscode-editor-foreground);
+	            font-family: var(--vscode-font-family);
+	            padding: 20px;
+	        }
+
+	        button {
+	            background-color: var(--vscode-button-background);
+	            color: var(--vscode-button-foreground);
+	            border: none;
+	            padding: 6px 14px;
+	            border-radius: 2px;
+	            cursor: pointer;
+	        }
+
+	        button:hover {
+	            background-color: var(--vscode-button-hoverBackground);
+	        }
+
+	        input {
+	            background-color: var(--vscode-input-background);
+	            color: var(--vscode-input-foreground);
+	            border: 1px solid var(--vscode-input-border);
+	            padding: 4px;
+	        }
+
+	        textarea {
+	            background-color: var(--vscode-input-background);
+	            color: var(--vscode-input-foreground);
+	            border: 1px solid var(--vscode-input-border);
+	            width: 100%;
+	            height: 400px;
+	            box-sizing: border-box;
+	            resize: none;
+	        }
+
+	        .container {
+	            box-sizing: border-box;
+	        }
+
+	        .output {
+	            background-color: var(--vscode-editor-background);
+	            color: var(--vscode-editor-foreground);
+	            box-sizing: border-box;
+	        }
+
+			.row {
+				margin: 20px 0px 20px 0px;
+			}
+	    </style>
+	</head>
+
+	<body>
+	    <div class="container">
+	        <div class="row">
+	            <button type="button">📋 Paste result</button>
+	        </div>
+	        <textarea placeholder='Paste a result of the prompt'></textarea>
+	        <div class="row">
+	            <button type="button">📟 Translate text</button>
+	        </div>
+	        <div class="output"></div>
+	    </div>
+	</body>
+
+	</html>
+  `;
+}
