@@ -1,7 +1,7 @@
 {
   "name": "copilot-latex-translator",
-  "displayName": "Copilot's LaTex Translator",
-  "description": "Extension that translates LaTex to readable formulas",
+  "displayName": "Copilot's LaTeX Translator",
+  "description": "Extension that translates LaTeX to readable formulas",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "copilot-latex-translator.helloWorld",
-        "title": "Hello World"
+        "command": "clt.start",
+        "title": "Start Copilot's LaTeX Translator"
       }
     ]
   },
