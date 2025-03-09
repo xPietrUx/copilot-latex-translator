@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import { setupWebviewCommunication } from './communication';
+
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('clt.start', () => {
@@ -7,22 +9,16 @@ export function activate(context: vscode.ExtensionContext) {
         'clt',
         "Copilot's LaTeX translator",
         vscode.ViewColumn.One,
-        {}
-      );
-
-      async function getClipboardText(): Promise<string> {
-        try {
-          const text = await navigator.clipboard.readText();
-          console.log('Operation successful');
-          return text;
-        } catch (err) {
-          console.log('Error');
-          return '';
+        {
+          enableScripts: true,
         }
-      }
+      );
 
       // HTML content
       panel.webview.html = getWebViewContent();
+
+      // Communication between webview and extension
+      setupWebviewCommunication(panel, context);
     })
   );
 }
@@ -106,3 +102,5 @@ function getWebViewContent() {
 	</html>
   `;
 }
+
+export function deactivate() {}
