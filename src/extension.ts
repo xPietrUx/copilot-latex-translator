@@ -95,11 +95,11 @@ function getWebViewContent() {
 	        <div class="row">
 	            <button type="button">📋 Paste result</button>
 	        </div>
-	        <textarea placeholder='Paste a result of the prompt'></textarea>
+	        <textarea id="paste-area" placeholder='Paste a result of the prompt'></textarea>
 	        <div class="row">
 	            <button type="button">📟 Translate text</button>
 	        </div>
-	        <div class="output"></div>
+	        <div id="output" class="output"></div>
 	    </div>
 	</body>
 
