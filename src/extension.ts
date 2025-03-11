@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { setupWebviewCommunication } from './communication';
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -13,7 +14,11 @@ export function activate(context: vscode.ExtensionContext) {
         }
       );
 
+      // HTML content
       panel.webview.html = getWebViewContent();
+
+      // Communication between webview and extension
+      setupWebviewCommunication(panel, context);
     })
   );
 }
