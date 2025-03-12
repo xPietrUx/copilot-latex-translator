@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import path from 'path';
+import fs from 'fs';
 import { setupWebviewCommunication } from './communication';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -15,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
       );
 
       // HTML content
-      panel.webview.html = getWebViewContent();
+      panel.webview.html = getWebViewContent(context.extensionPath);
 
       // Communication between webview and extension
       setupWebviewCommunication(panel, context);
@@ -23,7 +25,16 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-function getWebViewContent() {
+function getWebViewContent(extensionPath: string) {
+  // Path to dom-functions.js
+  const scriptPath = path.join(extensionPath, 'src', 'dom-functions.js');
+  let scriptContent = '';
+
+  try {
+    scriptContent = fs.readFileSync(scriptPath, 'utf-8');
+  } catch (error) {
+    console.error(error);
+  }
   return /*html*/ `
   <!DOCTYPE html>
   <html lang="en">
@@ -169,6 +180,15 @@ function getWebViewContent() {
           </div>
           <div id="output" class="output"></div>
       </div>
+
+<script>
+        ${scriptContent}
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', operatingWithDOMs);
+      } else {
+          operatingWithDOMs();
+      }
+</script>
   </body>
   
   </html>

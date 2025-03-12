@@ -6,13 +6,25 @@ function operatingWithDOMs() {
   const vscode = acquireVsCodeApi();
 
   // Initialize event handlers after document loading
-  document.addEventListener('DOMContentLoaded', () => {});
+  document.addEventListener('DOMContentLoaded', () => {
+    setupButtons(vscode);
+    setupMessageHandlers(vscode);
+  });
 }
 
 /*
  * Sets up buttons in the user interface
  */
-function setupButtons() {}
+function setupButtons() {
+  // Configuration of the Translate text button
+  const translateButton = document.getElementById('translate-button');
+  if (translateButton) {
+    translateButton.addEventListener('click', () => {
+      vscode.postMessage({ command: 'getClipboard' });
+      console.log('Dom func asking for clipboard text');
+    });
+  }
+}
 
 /*
  * Sets up handlers for incoming messages form the extension (communication.ts)
