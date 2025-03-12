@@ -53,11 +53,38 @@ function setupMessageHandlers(vscode) {
  */
 function setOutput(text) {
   const output = document.getElementById('output');
+  const descriptionTranslator = document.getElementById(
+    'description-translator'
+  );
   if (output) {
     try {
-      output.innerHTML = text;
+      if (descriptionTranslator) {
+        descriptionTranslator.style.display = 'none';
+      }
+      renderMarkdown(text);
     } catch (error) {
       console.error(error);
     }
   }
 }
+
+function renderMarkdown(text) {
+  const outputElement = document.getElementById('output');
+  if (outputElement) {
+    // Use Marked library to convert Markdown to HTML
+    outputElement.innerHTML = marked.parse(text);
+
+    // Render mathematical expressions
+    renderMathInElement(outputElement, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '\\[', right: '\\]', display: true },
+      ],
+      throwOnError: false,
+    });
+  }
+}
+
+operatingWithDOMs();
