@@ -183,11 +183,7 @@ function getWebViewContent(extensionPath: string) {
 
 <script>
         ${scriptContent}
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', operatingWithDOMs);
-      } else {
-          operatingWithDOMs();
-      }
+        operatingWithDOMs();
 </script>
   </body>
   
