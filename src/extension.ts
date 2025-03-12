@@ -13,11 +13,39 @@ export function activate(context: vscode.ExtensionContext) {
         {
           enableScripts: true,
           retainContextWhenHidden: true,
+          localResourceRoots: [
+            vscode.Uri.file(path.join(context.extensionPath, 'src')),
+            vscode.Uri.file(path.join(context.extensionPath, 'dist')),
+          ],
         }
       );
 
+      // File paths do libs
+      const katexJsUri = panel.webview.asWebviewUri(
+        vscode.Uri.file(
+          path.join(context.extensionPath, 'dist', 'katex', 'katex.min.js')
+        )
+      );
+
+      const katexCssUri = panel.webview.asWebviewUri(
+        vscode.Uri.file(
+          path.join(context.extensionPath, 'dist', 'katex', 'katex.min.css')
+        )
+      );
+
+      const markedJsUri = panel.webview.asWebviewUri(
+        vscode.Uri.file(
+          path.join(context.extensionPath, 'dist', 'marked.min.js')
+        )
+      );
+
       // HTML content
-      panel.webview.html = getWebViewContent(context.extensionPath);
+      panel.webview.html = getWebViewContent(
+        context.extensionPath,
+        katexJsUri.toString(),
+        katexCssUri.toString(),
+        markedJsUri.toString()
+      );
 
       // Communication between webview and extension
       setupWebviewCommunication(panel, context);
@@ -25,7 +53,12 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-function getWebViewContent(extensionPath: string) {
+function getWebViewContent(
+  extensionPath: string,
+  katexJsUri: string,
+  katexCssUri: string,
+  markedJsUri: string
+) {
   // Path to dom-functions.js
   const scriptPath = path.join(extensionPath, 'src', 'dom-functions.js');
   let scriptContent = '';
@@ -38,7 +71,11 @@ function getWebViewContent(extensionPath: string) {
   return /*html*/ `
   <!DOCTYPE html>
   <html lang="en">
-  
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="${katexCssUri}">
+  <!-- Libs KaTeX and marked.js -->
+  <script src="${katexCssUri}"></script>
+  <script src="${markedJsUri}"></script>  
   <head>
       <meta charset="UTF-8">
       <style>
