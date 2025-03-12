@@ -4,6 +4,7 @@
  */
 function operatingWithDOMs() {
   const vscode = acquireVsCodeApi();
+  console.log('doms ready');
 
   // Initialize event handlers after document loading
   document.addEventListener('DOMContentLoaded', () => {
@@ -15,13 +16,12 @@ function operatingWithDOMs() {
 /*
  * Sets up buttons in the user interface
  */
-function setupButtons() {
+function setupButtons(vscode) {
   // Configuration of the Translate text button
   const translateButton = document.getElementById('translate-button');
   if (translateButton) {
     translateButton.addEventListener('click', () => {
       vscode.postMessage({ command: 'getClipboard' });
-      console.log('Dom func asking for clipboard text');
     });
   }
 }
@@ -29,7 +29,24 @@ function setupButtons() {
 /*
  * Sets up handlers for incoming messages form the extension (communication.ts)
  */
-function setupMessageHandlers() {}
+function setupMessageHandlers(vscode) {
+  window.addEventListener('message', (event) => {
+    const message = event.data;
+    switch (message.command) {
+      case 'clipboardData':
+        if (message.text) {
+          setOutput(message.text);
+        } else {
+          setOutput('Message not received - empty clipboard?');
+        }
+        break;
+
+      default:
+        console.log('Unknown received command');
+        break;
+    }
+  });
+}
 
 /*
  * Sets text in output area
