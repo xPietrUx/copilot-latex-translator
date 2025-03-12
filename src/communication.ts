@@ -12,10 +12,12 @@ export function setupWebviewCommunication(
           try {
             const text = await vscode.env.clipboard.readText();
             panel.webview.postMessage({ command: 'clipboardData', text });
-            console.log('Clipboard data is sent');
           } catch (error) {
             console.error(error);
           }
+          break;
+        default:
+          console.log('Unknown received command');
           break;
       }
     },
