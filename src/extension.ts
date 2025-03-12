@@ -20,32 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
       );
 
-      // File paths do libs
-      const katexJsUri = panel.webview.asWebviewUri(
-        vscode.Uri.file(
-          path.join(context.extensionPath, 'dist', 'katex', 'katex.min.js')
-        )
-      );
-
-      const katexCssUri = panel.webview.asWebviewUri(
-        vscode.Uri.file(
-          path.join(context.extensionPath, 'dist', 'katex', 'katex.min.css')
-        )
-      );
-
-      const markedJsUri = panel.webview.asWebviewUri(
-        vscode.Uri.file(
-          path.join(context.extensionPath, 'dist', 'marked.min.js')
-        )
-      );
-
       // HTML content
-      panel.webview.html = getWebViewContent(
-        context.extensionPath,
-        katexJsUri.toString(),
-        katexCssUri.toString(),
-        markedJsUri.toString()
-      );
+      panel.webview.html = getWebViewContent(panel, context.extensionPath);
 
       // Communication between webview and extension
       setupWebviewCommunication(panel, context);
@@ -53,12 +29,37 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-function getWebViewContent(
-  extensionPath: string,
-  katexJsUri: string,
-  katexCssUri: string,
-  markedJsUri: string
-) {
+function getWebViewContent(panel: vscode.WebviewPanel, extensionPath: string) {
+  // Generate resource URIs
+  const katexJsUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(extensionPath, 'dist', 'lib', 'katex', 'katex.min.js')
+    )
+  );
+
+  const katexCssUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(extensionPath, 'dist', 'lib', 'katex', 'katex.min.css')
+    )
+  );
+
+  const markedJsUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(extensionPath, 'dist', 'lib', 'marked.min.js'))
+  );
+
+  const autoKatex = panel.webview.asWebviewUri(
+    vscode.Uri.file(
+      path.join(
+        extensionPath,
+        'dist',
+        'lib',
+        'katex',
+        'contrib',
+        'auto-render.min.js'
+      )
+    )
+  );
+
   // Path to dom-functions.js
   const scriptPath = path.join(extensionPath, 'src', 'dom-functions.js');
   let scriptContent = '';
@@ -68,16 +69,20 @@ function getWebViewContent(
   } catch (error) {
     console.error(error);
   }
+
   return /*html*/ `
   <!DOCTYPE html>
   <html lang="en">
-  <!-- KaTeX CSS -->
-  <link rel="stylesheet" href="${katexCssUri}">
-  <!-- Libs KaTeX and marked.js -->
-  <script src="${katexCssUri}"></script>
-  <script src="${markedJsUri}"></script>  
+  
   <head>
       <meta charset="UTF-8">
+      <!-- KaTeX CSS -->
+      <link rel="stylesheet" href="${katexCssUri}">
+      <!-- Libs KaTeX and marked.js -->
+      <script src="${markedJsUri}"></script>
+      <script src="${katexJsUri}"></script>
+      <!-- KaTeX auto-render -->
+      <script src="${autoKatex}"></script>
       <style>
           body {
               background-color: var(--vscode-editor-background);
@@ -105,10 +110,8 @@ function getWebViewContent(
               box-sizing: border-box;
               padding: 16px;
               line-height: 1.6;
-              font-family: "Times New Roman", Times, serif;
-              ;
+              font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol;
               overflow: auto;
-              margin-top: 10px;
           }
   
           .output h1,
@@ -203,29 +206,40 @@ function getWebViewContent(
           .row {
               margin: 20px 0px 20px 0px;
           }
+
+          hr.divider {
+              border: none;
+              height: 2px;
+              background-color: var(--vscode-panel-border);
+              margin: 20px 0;
+              width: 100%;
+          }
       </style>
   </head>
   
   <body>
       <div class="container">
           <h1>Copilot's LaTeX translator</h1>
-          <h2>1. Copy answer to your question</h2>
-          <h2>2. Click button</h2>
-          <h2>3. See translated answer</h2>
+          <div id="description-translator">
+              <h2>1. Copy answer to your question</h2>
+              <h2>2. Click button</h2>
+              <h2>3. See translated answer</h2>
+          </div>
           <div class="row">
               <button id="translate-button" type="button">📟 Translate text</button>
           </div>
+          <hr class="divider">
           <div id="output" class="output"></div>
       </div>
-
-<script>
-        ${scriptContent}
-        operatingWithDOMs();
-</script>
+  
+      <script>
+              ${scriptContent}
+          operatingWithDOMs();
+      </script>
   </body>
   
   </html>
-  `;
+    `;
 }
 
 export function deactivate() {}
