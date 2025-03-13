@@ -10,6 +10,9 @@
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
+				"--disable-extensions",
+				"--enable-proposed-api=GitHub.copilot",
+				"--enable-proposed-api=${publisher}.${name}",
 				"--extensionDevelopmentPath=${workspaceFolder}"
 			],
 			"outFiles": [
