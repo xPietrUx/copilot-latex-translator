@@ -16,9 +16,20 @@ export function activate(context: vscode.ExtensionContext) {
           localResourceRoots: [
             vscode.Uri.file(path.join(context.extensionPath, 'src')),
             vscode.Uri.file(path.join(context.extensionPath, 'dist')),
+            vscode.Uri.file(path.join(context.extensionPath, 'media')),
           ],
         }
       );
+
+      // Icon for webview
+      panel.iconPath = {
+        light: vscode.Uri.file(
+          path.join(context.extensionPath, 'media', 'clt-logo-light.svg')
+        ),
+        dark: vscode.Uri.file(
+          path.join(context.extensionPath, 'media', 'clt-logo-dark.svg')
+        ),
+      };
 
       // HTML content
       panel.webview.html = getWebViewContent(panel, context.extensionPath);
