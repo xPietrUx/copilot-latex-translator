@@ -244,8 +244,7 @@ function getWebViewContent(panel: vscode.WebviewPanel, extensionPath: string) {
       </div>
   
       <script>
-              ${scriptContent}
-          operatingWithDOMs();
+        ${scriptContent}
       </script>
   </body>
   
