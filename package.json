@@ -48,11 +48,6 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.3"
   },
-  "files": [
-    "out/**/*",
-    "dist/**/*",
-    "media/**/*"
-  ],
   "dependencies": {
     "katex": "^0.16.21",
     "marked": "^15.0.7"
