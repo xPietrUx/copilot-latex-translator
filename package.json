@@ -1,7 +1,7 @@
 {
   "name": "copilot-latex-translator",
   "displayName": "copilot-latex-translator",
-  "description": "Convert Copilot's LaTeX translator to readable form!",
+  "description": "Convert Copilot LaTeX translator to readable form!",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "clt.start",
-        "title": "Start Copilot's LaTeX Translator 📟"
+        "title": "Start Copilot LaTeX Translator 📟"
       }
     ]
   },
