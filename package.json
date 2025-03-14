@@ -5,6 +5,7 @@
   "description": "Convert Copilot LaTeX to readable form!",
   "version": "0.0.1",
   "license": "MIT",
+  "icon": "media/clt-logo.png",
   "engines": {
     "vscode": "^1.98.0"
   },
