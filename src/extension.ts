@@ -72,7 +72,7 @@ function getWebViewContent(panel: vscode.WebviewPanel, extensionPath: string) {
   );
 
   // Path to dom-functions.js
-  const scriptPath = path.join(extensionPath, 'src', 'dom-functions.js');
+  const scriptPath = path.join(extensionPath, 'dist', 'dom-functions.js');
   let scriptContent = '';
 
   try {
