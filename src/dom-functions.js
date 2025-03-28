@@ -70,21 +70,37 @@ function setOutput(text) {
 
 function renderMarkdown(text) {
   const outputElement = document.getElementById('output');
-  if (outputElement) {
-    // Use Marked library to convert Markdown to HTML
-    outputElement.innerHTML = marked.parse(text);
-
-    // Render mathematical expressions
-    renderMathInElement(outputElement, {
-      delimiters: [
-        { left: '$$', right: '$$', display: true },
-        { left: '$', right: '$', display: false },
-        { left: '\\(', right: '\\)', display: false },
-        { left: '\\[', right: '\\]', display: true },
-      ],
-      throwOnError: false,
-    });
+  if (!outputElement) {
+    return;
   }
+
+  let processedText = text.replace(
+    /````latex\n([\s\S]*?)\n````/g,
+    function (match, content) {
+      const mathContent = content.replace(/\\?\[([\s\S]*?)\\?\]/g, '$1');
+      return `$$${mathContent}$$`;
+    }
+  );
+
+  processedText = processedText
+    .replace(/\\textbf\{([^}]+)\}/g, '**$1**')
+    .replace(/\\textit\{([^}]+)\}/g, '*$1*')
+    .replace(/\\underline\{([^}]+)\}/g, '<u>$1</u>')
+    .replace(/\\emph\{([^}]+)\}/g, '*$1*');
+
+  outputElement.innerHTML = marked.parse(processedText);
+
+  renderMathInElement(outputElement, {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true },
+      // prettier-ignore
+      { left: '\[', right: '\]', display: true },
+    ],
+    throwOnError: false,
+  });
 }
 
 operatingWithDOMs();
