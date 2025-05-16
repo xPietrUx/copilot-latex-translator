@@ -1,0 +1,52 @@
+\textbf{Zadanie:} Z talii 52 kart losujemy 5 kart.\\
+$A$ - dokładnie 3 króle\\
+$B$ - co najmniej 1 król\\
+$C$ - co najmniej 1 król czarny\\
+$D$ - król pik\\
+Obliczyć: $P(A|B)$, $P(A|C)$, $P(A|D)$
+
+\textbf{Rozwiązanie:}
+
+\textbf{1. $P(A|B)$ - prawdopodobieństwo wylosowania dokładnie 3 króli pod warunkiem, że wylosowano co najmniej 1 króla}
+
+$P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A)}{P(B)}$, ponieważ $A \subset B$
+
+$P(A) = \frac{\binom{4}{3} \cdot \binom{48}{2}}{\binom{52}{5}}$
+
+$P(B) = 1 - P(\text{żaden król}) = 1 - \frac{\binom{48}{5}}{\binom{52}{5}}$
+
+$P(A|B) = \frac{\binom{4}{3} \cdot \binom{48}{2}}{\binom{52}{5} \cdot \left(1 - \frac{\binom{48}{5}}{\binom{52}{5}}\right)} = \frac{\binom{4}{3} \cdot \binom{48}{2}}{\binom{52}{5} - \binom{48}{5}}$
+
+\textbf{2. $P(A|C)$ - prawdopodobieństwo wylosowania dokładnie 3 króli pod warunkiem, że wylosowano co najmniej 1 czarnego króla}
+
+$P(A|C) = \frac{P(A \cap C)}{P(C)}$
+
+$P(C) = 1 - P(\text{żaden czarny król}) = 1 - \frac{\binom{50}{5}}{\binom{52}{5}}$
+
+Dla $P(A \cap C)$ mamy:
+\begin{itemize}
+\item 1 czarny król i 2 czerwone: $\binom{2}{1} \cdot \binom{2}{2} \cdot \binom{48}{2}$
+\item 2 czarne króle i 1 czerwony: $\binom{2}{2} \cdot \binom{2}{1} \cdot \binom{48}{2}$
+\end{itemize}
+
+$P(A \cap C) = \frac{\binom{2}{1} \cdot \binom{2}{2} \cdot \binom{48}{2} + \binom{2}{2} \cdot \binom{2}{1} \cdot \binom{48}{2}}{\binom{52}{5}}$
+
+$P(A|C) = \frac{\binom{2}{1} \cdot \binom{2}{2} \cdot \binom{48}{2} + \binom{2}{2} \cdot \binom{2}{1} \cdot \binom{48}{2}}{\binom{52}{5} \cdot \left(1 - \frac{\binom{50}{5}}{\binom{52}{5}}\right)}$
+
+\textbf{3. $P(A|D)$ - prawdopodobieństwo wylosowania dokładnie 3 króli pod warunkiem, że wylosowano króla pik}
+
+$P(A|D) = \frac{P(A \cap D)}{P(D)}$
+
+$P(D) = \frac{\binom{1}{1} \cdot \binom{51}{4}}{\binom{52}{5}}$
+
+$P(A \cap D)$ - mamy dokładnie 3 króle, w tym króla pik:
+$P(A \cap D) = \frac{\binom{1}{1} \cdot \binom{3}{2} \cdot \binom{48}{2}}{\binom{52}{5}}$
+
+$P(A|D) = \frac{\binom{1}{1} \cdot \binom{3}{2} \cdot \binom{48}{2}}{\binom{1}{1} \cdot \binom{51}{4}} = \frac{\binom{3}{2} \cdot \binom{48}{2}}{\binom{51}{4}}$
+
+\textbf{Odpowiedzi:}
+\begin{itemize}
+\item $P(A|B) = \frac{\binom{4}{3} \cdot \binom{48}{2}}{\binom{52}{5} - \binom{48}{5}}$
+\item $P(A|C) = \frac{\binom{2}{1} \cdot \binom{2}{2} \cdot \binom{48}{2} + \binom{2}{2} \cdot \binom{2}{1} \cdot \binom{48}{2}}{\binom{52}{5} - \binom{50}{5}}$
+\item $P(A|D) = \frac{\binom{3}{2} \cdot \binom{48}{2}}{\binom{51}{4}}$
+\end{itemize}
