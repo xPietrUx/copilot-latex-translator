@@ -1,7 +1,7 @@
-/*
- * The main function initializing DOM operations in webview
- * This function is the entry point for the webview script
- */
+//
+// The main function initializing DOM operations in webview
+// This function is the entry point for the webview script
+//
 function operatingWithDOMs() {
   const vscode = acquireVsCodeApi();
   console.log('doms ready');
@@ -13,9 +13,7 @@ function operatingWithDOMs() {
   });
 }
 
-/*
- * Sets up buttons in the user interface
- */
+//Sets up buttons in the user interface
 function setupButtons(vscode) {
   // Configuration of the Translate text button
   const translateButton = document.getElementById('translate-button');
@@ -26,9 +24,7 @@ function setupButtons(vscode) {
   }
 }
 
-/*
- * Sets up handlers for incoming messages form the extension (communication.ts)
- */
+// Sets up handlers for incoming messages form the extension (communication.ts)
 function setupMessageHandlers(vscode) {
   window.addEventListener('message', (event) => {
     const message = event.data;
@@ -48,9 +44,7 @@ function setupMessageHandlers(vscode) {
   });
 }
 
-/*
- * Sets text in output area
- */
+// Sets text in output area
 function setOutput(text) {
   const output = document.getElementById('output');
   const descriptionTranslator = document.getElementById(
@@ -94,10 +88,6 @@ function renderMarkdown(text) {
     delimiters: [
       { left: '$$', right: '$$', display: true },
       { left: '$', right: '$', display: false },
-      { left: '\\(', right: '\\)', display: false },
-      { left: '\\[', right: '\\]', display: true },
-      // prettier-ignore
-      { left: '\[', right: '\]', display: true },
     ],
     throwOnError: false,
   });
