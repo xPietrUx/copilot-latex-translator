@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('clt.start', () => {
       const panel = vscode.window.createWebviewPanel(
         'clt',
-        "Copilot's LaTeX Translator",
+        'Copilot LaTeX Translator',
         vscode.ViewColumn.One,
         {
           enableScripts: true,
