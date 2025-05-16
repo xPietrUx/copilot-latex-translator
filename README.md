@@ -9,7 +9,7 @@ Copilot session is isolated, any changes or modify tries is not possible. The si
 ## Usage
 
 1. Start session by typing command: "`Start Copilot LaTeX Translator 📟`"
-2. Ask Copilot and ask him to recive mathematical equations in formula $$...$$ and $...$
+2. **Ask Copilot and ask him to recive mathematical equations in formula `$$...$$` and `$...$`**
 3. Copy your answer 
 4. Click "`📟 Translate text`"
 5. See the translated text!
