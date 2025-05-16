@@ -230,7 +230,7 @@ function getWebViewContent(panel: vscode.WebviewPanel, extensionPath: string) {
   
   <body>
       <div class="container">
-          <h1>Copilot's LaTeX translator</h1>
+          <h1>Copilot LaTeX Translator</h1>
           <div id="description-translator">
               <h2>1. Copy answer to your question</h2>
               <h2>2. Click button</h2>
