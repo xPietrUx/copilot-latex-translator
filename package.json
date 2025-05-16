@@ -3,7 +3,7 @@
   "author": "Piotr Dusiński",
   "displayName": "copilot-latex-translator",
   "description": "Convert Copilot LaTeX to readable form!",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "icon": "media/clt-logo.png",
   "engines": {
