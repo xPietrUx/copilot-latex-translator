@@ -14,6 +14,10 @@ Copilot session is isolated, any changes or modify tries is not possible. The si
 4. Click "`📟 Translate text`"
 5. See the translated text!
 
+<p align="center">
+  <img src="https://github.com/xPietrUx/copilot-latex-translator/blob/master/media/example.gif" alt="Example of how the program works" />
+</p>
+
 ## License
 
 This extension is licensed under the [MIT License](LICENSE).
